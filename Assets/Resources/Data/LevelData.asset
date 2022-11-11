@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16a5a6d6263d83b438cf793df6784142, type: 3}
+  m_Name: LevelData
+  m_EditorClassIdentifier: 
+  levelDataHolders:
+  - name: Red
+    color: {r: 1, g: 0.72499996, b: 0.7, a: 1}
+    baseMaterial: {fileID: 2100000, guid: 101e4c0b858c0cb4dbe12d6efbc67464, type: 2}
+    bgRGBMaterial: {fileID: 2100000, guid: 16ad651037950ba4994e54261f6e3398, type: 2}
+    colorGradient: {fileID: 11400000, guid: df43e35f8577bfb4ea2cba47753d0154, type: 2}
+  - name: Green
+    color: {r: 0.7019608, g: 1, b: 0.8807843, a: 1}
+    baseMaterial: {fileID: 2100000, guid: 1b870934838f3114fa96ba1a6cbd9a0d, type: 2}
+    bgRGBMaterial: {fileID: 2100000, guid: 63abd8450622a3047b83609ef2dad2f3, type: 2}
+    colorGradient: {fileID: 11400000, guid: 7bf4fddc70af0d54b8993c7ee18374c3, type: 2}
+  - name: Blue
+    color: {r: 0.7019608, g: 0.766536, b: 1, a: 1}
+    baseMaterial: {fileID: 2100000, guid: 81d7950de438a18448e86c0f89dd5549, type: 2}
+    bgRGBMaterial: {fileID: 2100000, guid: 9acd89939a98a5b45b0d7e1ca83b6bd4, type: 2}
+    colorGradient: {fileID: 11400000, guid: 4e6906e4f83c00a48bb5136e90b09f60, type: 2}
+  - name: Gray
+    color: {r: 1, g: 1, b: 1, a: 1}
+    baseMaterial: {fileID: 2100000, guid: bc3d06793746999498249a13274323bd, type: 2}
+    bgRGBMaterial: {fileID: 2100000, guid: 2ecc557d8f8feff4fb0537248a20eca1, type: 2}
+    colorGradient: {fileID: 11400000, guid: c5b26362df5469f4f8ebfe29e9ffd5b7, type: 2}
+  - name: Purple
+    color: {r: 0.860839, g: 0.7019608, b: 1, a: 1}
+    baseMaterial: {fileID: 2100000, guid: 72fe525533b64b2429dfb85a4a212e60, type: 2}
+    bgRGBMaterial: {fileID: 2100000, guid: 265f7e9bef430174494e32cb4756bbb4, type: 2}
+    colorGradient: {fileID: 11400000, guid: 8e8fcbf68c75ff844bde240975cf962d, type: 2}
