@@ -34,7 +34,7 @@ MonoBehaviour:
     bgRGBMaterial: {fileID: 2100000, guid: 2ecc557d8f8feff4fb0537248a20eca1, type: 2}
     colorGradient: {fileID: 11400000, guid: c5b26362df5469f4f8ebfe29e9ffd5b7, type: 2}
   - name: Purple
-    color: {r: 0.860839, g: 0.7019608, b: 1, a: 1}
+    color: {r: 0.9490196, g: 0.57254905, b: 1, a: 1}
     baseMaterial: {fileID: 2100000, guid: 72fe525533b64b2429dfb85a4a212e60, type: 2}
     bgRGBMaterial: {fileID: 2100000, guid: 265f7e9bef430174494e32cb4756bbb4, type: 2}
     colorGradient: {fileID: 11400000, guid: 8e8fcbf68c75ff844bde240975cf962d, type: 2}

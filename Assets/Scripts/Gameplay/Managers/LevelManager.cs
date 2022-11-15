@@ -6,13 +6,21 @@ using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
 {
+    #region Singleton
+
+    public static LevelManager Instance;
+    private void Awake() => Instance = this;
+
+    #endregion
+
     [Header("Level Data")]
     [SerializeField] private LevelData levelData;
 
     public int gameLevel;
 
-
     [Header("Level Variables")]
+    [SerializeField] private Transform levelScene0;
+    [SerializeField] private Transform levelScene1;
     [SerializeField] private Light directionalLight;
     [SerializeField] private TextMeshPro levelCounter;
     [SerializeField] private MeshRenderer baseEnv;
@@ -20,16 +28,35 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+        //Temporary 
         if (Input.GetMouseButtonDown(0))
         {
             ChangeLevel();
         }
     }
 
+    public void SwitchLevelScenes(int currentLevelScene)
+    {
+        switch (currentLevelScene)
+        {
+            case 0:
+                levelScene0.gameObject.SetActive(true);
+                levelScene1.gameObject.SetActive(false);
+                ChangeLevel();
+                break;
+            case 1:
+                levelScene1.gameObject.SetActive(true);
+                levelScene0.gameObject.SetActive(false);
+                break;
+        }
+    }
+
     public void ChangeLevel()
     {
+        gameLevel++;
+        levelCounter.text = gameLevel.ToString();
+         
         var randomLevelColor = (LevelColor)Random.Range(0, 5);
-        
         switch (randomLevelColor)
         {
             case LevelColor.Red:
@@ -63,5 +90,6 @@ public class LevelManager : MonoBehaviour
                 levelCounter.colorGradientPreset = levelData.levelDataHolders[4].colorGradient;
                 break;
         }
+        // todo - Enable Random Platform Tiles
     }
 }
