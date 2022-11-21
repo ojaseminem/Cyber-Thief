@@ -21,7 +21,7 @@ namespace Gameplay.Player
             if (distanceTravelled >= 17) DonePath();
         }
 
-        public void DonePath()
+        private void DonePath()
         {
             moveOnPath = false;
             LevelManager.Instance.SwitchLevelScenes(0);

@@ -21,8 +21,8 @@ MonoBehaviour:
   BlurIterations: 1
   ColorGradingEnabled: 1
   ToneMappingEnabled: 1
-  Gamma: 0.8
-  Exposure: 2.5
+  Gamma: 0.74
+  Exposure: 3.31
   LUTEnabled: 0
   LUT: {fileID: 0}
   LUTIntensity: 0

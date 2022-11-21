@@ -1,7 +1,8 @@
 ﻿using System;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Gameplay.Managers
 {
@@ -14,100 +15,113 @@ namespace Gameplay.Managers
 
         #endregion
 
-        #region Gameplay Variables
+        #region Menu Variables
 
-        public static bool HasGameStarted;
-        public static bool HasGamePaused;
-        public static bool HasGameEnded;
+        [SerializeField] private GameObject hudMenu;
+        [SerializeField] private GameObject pauseMenu;
+        [SerializeField] private GameObject gameOverMenu;
 
         #endregion
-        
-        #region Change Camera Position Variables
 
-        [Header("Start Gameplay")]
-        [SerializeField] private Camera mainCamera;
-        [SerializeField] private Vector3 cameraDefaultPosition, cameraFocusedPositionEntry, cameraFocusedPositionExit;
-        [HideInInspector] public int camPositionPreset;
+        #region Game UI Variables
+
+        [HideInInspector]
+        public int ditcoins;
+        [HideInInspector]
+        public int vethereum;
+        
+        [SerializeField] private TextMeshProUGUI ditcoinsText;
+        [SerializeField] private TextMeshProUGUI vethereumText;
+
+        public static Action IncrementDitcoins;
+        public static Action IncrementVethereum;
+        
         #endregion
         
         #region Fade In / Out Variables
 
         [Header("Fade In / Out")]
-        [SerializeField] private Transform fadeBlack;
+        [SerializeField] private GameObject fade;
+        [SerializeField] private GameObject fadeBlack;
         [SerializeField] private ParticleSystem matrixCode;
-        [SerializeField] private float fadeStartPosY;
-        [SerializeField] private float fadeEndPosY;
-
-        private Tween _fadeInMoveIn;
-        private Tween _fadeOutMoveOut;
 
         #endregion
+
+        private void OnEnable()
+        {
+            IncrementDitcoins += IncrementDitcoinCount;
+            IncrementVethereum += IncrementVethereumCount;
+        }
 
         private void Start()
         {
             //LevelManager.Instance.SwitchLevelScenes(1);
             //LevelManager.Instance.ChangeLevel();
-            //ScoreManager.Instance.ResetScore();
+            ditcoinsText.text = "0";
+            vethereumText.text = "0";
+            PlayerManager.Instance.PlayerSpawn();
         }
 
-        #region Change Camera Position
-
-        public void ChangeCameraPosition()
+        public void Replay()
         {
-            if (!HasGameStarted)
-            {
-                mainCamera.transform.DOMove(cameraFocusedPositionEntry, 1f);
-                PlayerManager.Instance.PlayerSpawn();
-            }
-            else
-            {
-                mainCamera.transform.DOMove(cameraDefaultPosition, 1f);
-            }
+            SceneManager.LoadScene("GameScene");
         }
 
-        #endregion
-
-        #region Fade In / Out
-
-        public void FadeIn()
+        public void GoToMenu()
         {
-            var main = matrixCode.main;
-            main.loop = true;
-            matrixCode.Play(true);
-
-            _fadeInMoveIn.Kill();
-            _fadeOutMoveOut.Kill();
-            var fadeBlackPosition = fadeBlack.position;
-            fadeBlackPosition = new Vector3(fadeBlackPosition.x, fadeStartPosY, fadeBlackPosition.z);
-            fadeBlack.position = fadeBlackPosition;
-            
-            MoveIn();
-        }
-
-        private void MoveIn()
-        {
-            _fadeInMoveIn = fadeBlack.DOMoveY(0, 5);
+            Time.timeScale = 1;
+            SceneManager.LoadScene("MenuScene");
         }
         
-        public void FadeOut()
+        public void PauseGame()
         {
-            var main = matrixCode.main;
-            main.loop = false;
-            matrixCode.Play(true);
-            
-            _fadeInMoveIn.Kill();
-            _fadeOutMoveOut.Kill();
-            var fadeBlackPosition = fadeBlack.position;
-            fadeBlackPosition = new Vector3(fadeBlackPosition.x, 0, fadeBlackPosition.z);
-            fadeBlack.position = fadeBlackPosition;
+            Time.timeScale = 0;
+            hudMenu.SetActive(false);
+            pauseMenu.SetActive(true);
+        }
 
-            Invoke(nameof(MoveOut), 2f);
+        public void ResumeGame()
+        {
+            Time.timeScale = 1;
+            hudMenu.SetActive(true);
+            pauseMenu.SetActive(false);
         }
         
-        private void MoveOut()
+        public void GameOver()
         {
-            _fadeOutMoveOut = fadeBlack.DOMoveY(fadeEndPosY, 3)
-                .OnComplete(ChangeCameraPosition);
+            hudMenu.SetActive(false);
+            SaveLoadManager.CurrentSaveData.highScore = LevelManager.Instance.gameLevel;
+            SaveLoadManager.CurrentSaveData.ditcoin = ditcoins;
+            SaveLoadManager.CurrentSaveData.vethereum = vethereum;
+            SaveLoadManager.SaveGame();
+            FadeIn();
+        }
+
+        private void ShowGameOverMenu()
+        {
+            gameOverMenu.SetActive(true);
+        }
+
+        private void IncrementDitcoinCount()
+        {
+            ditcoins++;
+            ditcoinsText.text = ditcoins.ToString();
+        }
+
+        private void IncrementVethereumCount()
+        {
+            vethereum++;
+            vethereumText.text = vethereum.ToString();
+        }
+        
+        #region Fade In
+
+        private void FadeIn()
+        {
+            fade.SetActive(true);
+            fadeBlack.GetComponent<Animator>().enabled = true;
+            matrixCode.Play(true);
+            Invoke(nameof(ShowGameOverMenu), 2f);
         }
 
         #endregion

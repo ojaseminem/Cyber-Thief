@@ -6,12 +6,13 @@ namespace Gameplay.Misc
     
     public class SaveData
     {
-        public string userName = "Player Zero";
-        public int maxGameLevel;
+        public int highScore;
 
-        public int bitCoin;
-        public int ethereumCoin;
+        public int ditcoin;
+        public int vethereum;
 
+        public string timePlayed;
+        
         public float volume;
     }
 }

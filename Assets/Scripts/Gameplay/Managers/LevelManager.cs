@@ -1,4 +1,5 @@
 using System;
+using Gameplay.Managers;
 using Scriptable_Objects;
 using TMPro;
 using UnityEngine;
@@ -19,21 +20,12 @@ public class LevelManager : MonoBehaviour
     public int gameLevel;
 
     [Header("Level Variables")]
-    [SerializeField] private Transform levelScene0;
-    [SerializeField] private Transform levelScene1;
+    [SerializeField] private GameObject levelScene0;
+    [SerializeField] private GameObject levelScene1;
     [SerializeField] private Light directionalLight;
     [SerializeField] private TextMeshPro levelCounter;
     [SerializeField] private MeshRenderer baseEnv;
     [SerializeField] private MeshRenderer bgRGB;
-
-    private void Update()
-    {
-        //Temporary 
-        if (Input.GetMouseButtonDown(0))
-        {
-            ChangeLevel();
-        }
-    }
 
     public void SwitchLevelScenes(int currentLevelScene)
     {
@@ -55,7 +47,9 @@ public class LevelManager : MonoBehaviour
     {
         gameLevel++;
         levelCounter.text = gameLevel.ToString();
-         
+        
+        PlayerManager.Instance.PlayerSpawn();
+        
         var randomLevelColor = (LevelColor)Random.Range(0, 5);
         switch (randomLevelColor)
         {

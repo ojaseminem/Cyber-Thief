@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.Player;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -13,12 +14,17 @@ namespace Gameplay.Managers
         #endregion
 
         [SerializeField] private Transform playerSpawnPosition;
+        [SerializeField] private PlayerController playerController;
         
         public void PlayerSpawn()
         {
-            // todo - play spawn animation or play spawn sound or play some spawn fx or play spawn cinematic
-            //todo - call game manager change camera position again
-            //todo -                HasGameStarted = true;
+            playerController.transform.position = playerSpawnPosition.position;
+            playerController.gameObject.SetActive(true);
+        }
+
+        public void PlayerCompletedLevel()
+        {
+            playerController.gameObject.SetActive(false);
         }
     }
 }

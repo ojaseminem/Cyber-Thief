@@ -9,8 +9,9 @@ namespace Gameplay.Levels
     {
         public int levelType;
 
-        [Header("Game Level Scene Variables")]
-        
+        [Header("Game Level Scene Variables")] 
+        [SerializeField] private RamTileManager ramTileManager;
+        public static bool LevelEnabled;
         
         [Header("Level Switcher Scene Variables")]
         [SerializeField] private ParticleSystem matrixFx;
@@ -21,7 +22,8 @@ namespace Gameplay.Levels
             switch (levelType)
             {
                 case 0:
-                    
+                    ramTileManager.RandomRamTile();
+                    //LevelEnabled = true;
                     break;
                 case 1:
                     matrixFx.Play(true);
@@ -35,7 +37,7 @@ namespace Gameplay.Levels
             switch (levelType)
             {
                 case 0:
-                    
+                    //LevelEnabled = false;
                     break;
                 case 1:
                     matrixFx.Stop(true);
@@ -44,10 +46,10 @@ namespace Gameplay.Levels
             }
         }
 
-        private IEnumerator ChangeLevel()
+        /*private IEnumerator ChangeLevel()
         {
             yield return new WaitForSeconds(4f);
             LevelManager.Instance.SwitchLevelScenes(0);
-        }
+        }*/
     }
 }

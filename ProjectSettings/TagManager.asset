@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Bitcoin
   - Ethereum
+  - GroundEnd
+  - LanOutput
+  - Death
   layers:
   - Default
   - TransparentFX
