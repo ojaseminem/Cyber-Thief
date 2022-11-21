@@ -9,7 +9,7 @@ namespace Gameplay.Enemy
     {
         private CharacterController _controller;
         private Vector3 _move;
-        [SerializeField] private bool _directionLeft;
+        private bool _directionLeft;
         public bool canMove;
         [SerializeField] private float movementSpeed;
         [SerializeField] private float attackSpeed;

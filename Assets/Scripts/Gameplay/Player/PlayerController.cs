@@ -146,6 +146,7 @@ namespace Gameplay.Player
             IEnumerator DeathAnim()
             {
                 _isDead = true;
+                GameManager.PlayerDead = true;
                 speed = 0;
                 _controller.enabled = false;
                 anim.ResetTrigger(Replay);

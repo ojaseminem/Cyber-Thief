@@ -35,6 +35,8 @@ namespace Gameplay.Managers
 
         public static Action IncrementDitcoins;
         public static Action IncrementVethereum;
+
+        public static bool PlayerDead;
         
         #endregion
         
@@ -55,11 +57,11 @@ namespace Gameplay.Managers
 
         private void Start()
         {
-            //LevelManager.Instance.SwitchLevelScenes(1);
-            //LevelManager.Instance.ChangeLevel();
             ditcoinsText.text = "0";
             vethereumText.text = "0";
             PlayerManager.Instance.PlayerSpawn();
+            Time.timeScale = 1;
+            PlayerDead = false;
         }
 
         public void Replay()

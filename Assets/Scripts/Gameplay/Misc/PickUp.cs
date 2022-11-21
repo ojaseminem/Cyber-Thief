@@ -7,7 +7,7 @@ namespace Gameplay.Misc
     public class PickUp : MonoBehaviour
     {
         [SerializeField] private GameObject pickupEffect;
-        [SerializeField] private int btcOrEth;
+        [SerializeField] private int dtcOrVeth;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -20,7 +20,7 @@ namespace Gameplay.Misc
         private void Pickup()
         {
             transform.GetComponent<BoxCollider>().enabled = false;
-            if (btcOrEth == 0)
+            if (dtcOrVeth == 0)
             {
                 GameManager.IncrementDitcoins?.Invoke();
                 /*if(PlayerController.instance.canCollectCollectables)
@@ -29,8 +29,9 @@ namespace Gameplay.Misc
                     AudioManager.instance.PlaySound("SFX_CoinCollected");
                 }*/
             }
-            else if(btcOrEth == 1)
+            else if(dtcOrVeth == 1)
             {
+                GameManager.IncrementVethereum?.Invoke();
                 /*if(PlayerController.instance.canCollectCollectables)
                 {
                     PlayerManager.instance.PlusDiamond(+1, "+");
