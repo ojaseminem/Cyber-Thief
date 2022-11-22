@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.Managers;
 using Gameplay.Player;
 using UnityEngine;
 
@@ -94,7 +95,8 @@ namespace Gameplay.Enemy
         {
             _isDead = true;
             anim.SetFloat(Blend, 0);
-            Destroy(gameObject, 1f);
+            AudioManager.Instance.PlaySound("RobotDeath");
+            Destroy(gameObject, .1f);
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)

@@ -24,20 +24,12 @@ namespace Gameplay.Misc
             if (dtcOrVeth == 0)
             {
                 GameManager.IncrementDitcoins?.Invoke();
-                /*if(PlayerController.instance.canCollectCollectables)
-                {
-                    PlayerManager.instance.PlusCoin(+1, "+");
-                    AudioManager.instance.PlaySound("SFX_CoinCollected");
-                }*/
+                AudioManager.Instance.PlaySound("Ditcoin");
             }
             else if(dtcOrVeth == 1)
             {
                 GameManager.IncrementVethereum?.Invoke();
-                /*if(PlayerController.instance.canCollectCollectables)
-                {
-                    PlayerManager.instance.PlusDiamond(+1, "+");
-                    AudioManager.instance.PlaySound("SFX_DiamondCollected");
-                }*/
+                AudioManager.Instance.PlaySound("Vethereum");
             }
 
             var pickedUpEffect = Instantiate(pickupEffect, transform.position, transform.rotation);

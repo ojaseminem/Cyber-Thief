@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Application = UnityEngine.Device.Application;
+using Random = UnityEngine.Random;
 
 namespace Gameplay.Managers
 {
@@ -66,22 +67,39 @@ namespace Gameplay.Managers
             Time.timeScale = 1;
             TimeCalculator.Instance.BeginTimer();
             PlayerDead = false;
+
+            var rand = Random.Range(0, 3);
+            switch (rand)
+            {
+                case 0:
+                    AudioManager.Instance.PlaySound("BG");
+                    break;
+                case 1:
+                    AudioManager.Instance.PlaySound("BG_2");
+                    break;
+                case 2:
+                    AudioManager.Instance.PlaySound("BG_3");
+                    break;
+            }
         }
 
         public void Replay()
         {
+            AudioManager.Instance.PlaySound("Click");
             SceneManager.LoadScene("GameScene");
         }
 
         public void GoToMenu()
         {
             Time.timeScale = 1;
+            AudioManager.Instance.PlaySound("Click");
             SceneManager.LoadScene("MenuScene");
         }
         
         public void PauseGame()
         {
             Time.timeScale = 0;
+            AudioManager.Instance.PlaySound("Pause");
             hudMenu.SetActive(false);
             pauseMenu.SetActive(true);
         }
@@ -89,6 +107,7 @@ namespace Gameplay.Managers
         public void ResumeGame()
         {
             Time.timeScale = 1;
+            AudioManager.Instance.PlaySound("Click");
             hudMenu.SetActive(true);
             pauseMenu.SetActive(false);
         }
@@ -96,12 +115,24 @@ namespace Gameplay.Managers
         public void GameOver()
         {
             hudMenu.SetActive(false);
-            if (SaveLoadManager.CurrentSaveData.highScore <= LevelManager.Instance.gameLevel)
-                SaveLoadManager.CurrentSaveData.highScore = LevelManager.Instance.gameLevel;
-            SaveLoadManager.CurrentSaveData.ditcoin += ditcoins;
-            SaveLoadManager.CurrentSaveData.vethereum += vethereum;
-            SaveLoadManager.CurrentSaveData.timePlayed += TimeCalculator.Instance.elapsedTime;
+            var curr = SaveLoadManager.CurrentSaveData;
+            curr.ditcoin += ditcoins;
+            curr.vethereum += vethereum;
+            curr.timePlayed += TimeCalculator.Instance.elapsedTime;
+            if (curr.highScore <= LevelManager.Instance.gameLevel) curr.highScore = LevelManager.Instance.gameLevel;
             SaveLoadManager.SaveGame();
+
+            var rand = Random.Range(0, 2);
+            switch (rand)
+            {
+                case 0:
+                    AudioManager.Instance.PlaySound("GameOver");
+                    break;
+                case 1:
+                    AudioManager.Instance.PlaySound("GameOver_2");
+                    break;
+            }
+
             FadeIn();
         }
 

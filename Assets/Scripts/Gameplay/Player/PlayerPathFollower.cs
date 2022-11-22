@@ -1,4 +1,5 @@
-﻿using PathCreation;
+﻿using Gameplay.Managers;
+using PathCreation;
 using UnityEngine;
 
 namespace Gameplay.Player
@@ -24,6 +25,7 @@ namespace Gameplay.Player
         private void DonePath()
         {
             moveOnPath = false;
+            AudioManager.Instance.PlaySound("Portal");
             LevelManager.Instance.SwitchLevelScenes(0);
         }
         

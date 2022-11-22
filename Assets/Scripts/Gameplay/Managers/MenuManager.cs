@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Gameplay.Managers
 {
@@ -32,6 +33,23 @@ namespace Gameplay.Managers
         {
             RefreshSettings();
             RefreshStats();
+            
+            var rand = Random.Range(0, 4);
+            switch (rand)
+            {
+                case 0:
+                    AudioManager.Instance.PlaySound("BG_1");
+                    break;
+                case 1:
+                    AudioManager.Instance.PlaySound("BG_2");
+                    break;
+                case 2:
+                    AudioManager.Instance.PlaySound("BG_3");
+                    break;
+                case 3:
+                    AudioManager.Instance.PlaySound("BG_4");
+                    break;
+            }
         }
 
         public void Play()
@@ -39,6 +57,7 @@ namespace Gameplay.Managers
             StartCoroutine(PlayRoutine());
             IEnumerator PlayRoutine()
             {
+                AudioManager.Instance.PlaySound("Click");
                 MoveMenuItems();
                 void MoveMenuItems()
                 {
@@ -51,7 +70,13 @@ namespace Gameplay.Managers
                 yield return new WaitForSeconds(2f);
                 _charCanMove = true;
                 animCharacter.SetTrigger(RunTrigger);
-                yield return new WaitForSeconds(4f);
+                yield return new WaitForSeconds(3f);
+                AudioManager.Instance.PauseSound("BG_1");
+                AudioManager.Instance.PauseSound("BG_2");
+                AudioManager.Instance.PauseSound("BG_3");
+                AudioManager.Instance.PauseSound("BG_4");
+                AudioManager.Instance.PlaySound("Portal");
+                yield return new WaitForSeconds(.5f);
                 SceneManager.LoadScene("GameScene");
             }
         }

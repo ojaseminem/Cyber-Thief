@@ -9,14 +9,10 @@ namespace Gameplay.Managers
         public static AudioManager Instance;
         public Sound[] sounds;
 
-        public Slider volumeSlider;
-        
         void Awake()
         {
             Instance = this;
-            
-            SetVolume();
-            
+
             foreach(Sound s in sounds)
             {
                 s.source = gameObject.AddComponent<AudioSource>();
@@ -43,18 +39,6 @@ namespace Gameplay.Managers
                 if (s.name == name)
                     s.source.Pause();
             }
-        }
-
-        private void SetVolume()
-        {
-            //AudioListener.volume = PlayerPrefs.GetFloat("OverallVolume", 1); 
-            //volumeSlider.value = AudioListener.volume;
-        }
-        
-        public void UpdateVolume()
-        {
-            //AudioListener.volume = volumeSlider.value;
-            //PlayerPrefs.SetFloat("OverallVolume", volumeSlider.value);
         }
     }
 }

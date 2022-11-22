@@ -7,7 +7,7 @@ namespace Gameplay.Managers
 {
     public static class SaveLoadManager
     {
-        public static SaveData CurrentSaveData;
+        public static SaveData CurrentSaveData = new SaveData();
 
         private const string SaveDirectory = "/SaveData/";
         private const string FileName = "SaveGame.sav";

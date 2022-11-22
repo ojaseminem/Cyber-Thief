@@ -13,6 +13,6 @@ namespace Gameplay.Misc
 
         public float timePlayed;
         
-        public float volume;
+        public float volume = 1;
     }
 }

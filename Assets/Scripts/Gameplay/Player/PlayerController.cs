@@ -96,7 +96,7 @@ namespace Gameplay.Player
 
         private void JumpUp()
         {
-            //AudioManager.instance.PlaySound("SFX_PlayerJumpUp");
+            AudioManager.Instance.PlaySound("Jump");
             _controller.center = new Vector3(0, 1.5f, 0);
             _velocity.y = Mathf.Sqrt(jumpHeight * 2 * -gravity);
             anim.SetTrigger(Replay);
@@ -148,6 +148,9 @@ namespace Gameplay.Player
 
             IEnumerator DeathAnim()
             {
+                AudioManager.Instance.PauseSound("BG");
+                AudioManager.Instance.PauseSound("BG_2");
+                AudioManager.Instance.PauseSound("BG_3");
                 var hitPosOffset = transform.position + new Vector3(0, .5f, 0.5f);
                 Instantiate(hitFx, hitPosOffset, transform.rotation);
                 _isDead = true;
@@ -158,6 +161,7 @@ namespace Gameplay.Player
                 anim.ResetTrigger(Replay);
                 anim.SetTrigger(Death1);
                 yield return new WaitForSeconds(1.2f);
+                AudioManager.Instance.PlaySound("Hit");
                 skmCharacter.gameObject.SetActive(false);
                 characterDeathPose.gameObject.SetActive(true);
                 var explosionPosOffset = transform.position + new Vector3(0, 1.6f, 0.2f);
@@ -171,6 +175,7 @@ namespace Gameplay.Player
         {
             if (other.CompareTag("LanOutput"))
             {
+                AudioManager.Instance.PlaySound("Portal");
                 PlayerManager.Instance.PlayerCompletedLevel();
                 LevelManager.Instance.SwitchLevelScenes(1);
             }
