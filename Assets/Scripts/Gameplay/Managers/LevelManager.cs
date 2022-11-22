@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
 
     public void SwitchLevelScenes(int currentLevelScene)
     {
-        if (!GameManager.PlayerDead) return;
+        if (GameManager.PlayerDead) return;
         switch (currentLevelScene)
         {
             case 0:

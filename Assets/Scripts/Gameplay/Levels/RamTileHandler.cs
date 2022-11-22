@@ -8,12 +8,12 @@ namespace Gameplay.Levels
     public class RamTileHandler : MonoBehaviour
     {
         [SerializeField] private GameObject[] coinSlots;
-        [SerializeField] private PickUp[] coins;
+        [SerializeField] private PickUp[] pickUps;
         private void OnEnable()
         {
             DisableAll();
             coinSlots[RandomCoinSlotNumber()].SetActive(true);
-            foreach (var pickUp in coins)
+            foreach (var pickUp in pickUps)
             {
                 pickUp.ResetVisibility();
             }

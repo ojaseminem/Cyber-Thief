@@ -11,7 +11,7 @@ namespace Gameplay.Misc
         public int ditcoin;
         public int vethereum;
 
-        public string timePlayed;
+        public float timePlayed;
         
         public float volume;
     }

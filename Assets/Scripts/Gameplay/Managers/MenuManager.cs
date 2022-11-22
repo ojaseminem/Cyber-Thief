@@ -30,7 +30,6 @@ namespace Gameplay.Managers
 
         private void Start()
         {
-            SaveLoadManager.LoadGame();
             RefreshSettings();
             RefreshStats();
         }
@@ -72,7 +71,9 @@ namespace Gameplay.Managers
             ditcoinsText.text = SaveLoadManager.CurrentSaveData.ditcoin.ToString();
             vethereumText.text = SaveLoadManager.CurrentSaveData.vethereum.ToString();
             highScoreText.text = SaveLoadManager.CurrentSaveData.highScore.ToString();
-            timePlayedText.text = SaveLoadManager.CurrentSaveData.timePlayed;
+            var elapsedTime = SaveLoadManager.CurrentSaveData.timePlayed;
+            var timeSpan = TimeSpan.FromSeconds(elapsedTime);
+            timePlayedText.text = timeSpan.ToString("mm' : 'ss' . 'ff");
         }
         
         public void RefreshSettings()

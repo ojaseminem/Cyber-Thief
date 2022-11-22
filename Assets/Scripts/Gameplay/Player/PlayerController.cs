@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Gameplay.Managers;
+using Gameplay.Misc;
 using UnityEngine;
 
 namespace Gameplay.Player
@@ -43,6 +44,7 @@ namespace Gameplay.Player
         //Death Variables
         private bool _isDead;
         [SerializeField] private Transform characterDeathPose;
+        [SerializeField] private Transform hitFx, explosionFx;
         
         //Animation Variables
         [SerializeField] private Animator anim;
@@ -105,10 +107,11 @@ namespace Gameplay.Player
         private void JumpDown()
         {
             //AudioManager.instance.PlaySound("SFX_PlayerJumpDown");
-            _controller.center = new Vector3(0, 1.5f, 0);
+            /*_controller.center = new Vector3(0, 1.5f, 0);
             _velocity.y = Mathf.Sqrt(jumpHeight * 2 * -gravity);
             anim.SetFloat(Blend, 4);
-            anim.SetTrigger(Replay);
+            anim.SetTrigger(Replay);*/
+            JumpUp();
         }
 
         private void ChangeDirection()
@@ -145,7 +148,10 @@ namespace Gameplay.Player
 
             IEnumerator DeathAnim()
             {
+                var hitPosOffset = transform.position + new Vector3(0, .5f, 0.5f);
+                Instantiate(hitFx, hitPosOffset, transform.rotation);
                 _isDead = true;
+                TimeCalculator.Instance.EndTimer();
                 GameManager.PlayerDead = true;
                 speed = 0;
                 _controller.enabled = false;
@@ -154,6 +160,8 @@ namespace Gameplay.Player
                 yield return new WaitForSeconds(1.2f);
                 skmCharacter.gameObject.SetActive(false);
                 characterDeathPose.gameObject.SetActive(true);
+                var explosionPosOffset = transform.position + new Vector3(0, 1.6f, 0.2f);
+                Instantiate(explosionFx, explosionPosOffset, characterDeathPose.rotation);
                 yield return new WaitForSeconds(2f);
                 GameManager.Instance.GameOver();
             }

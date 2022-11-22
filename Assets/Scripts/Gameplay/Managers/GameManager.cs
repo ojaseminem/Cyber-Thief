@@ -1,8 +1,10 @@
 ﻿using System;
 using DG.Tweening;
+using Gameplay.Misc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Application = UnityEngine.Device.Application;
 
 namespace Gameplay.Managers
 {
@@ -57,10 +59,12 @@ namespace Gameplay.Managers
 
         private void Start()
         {
+            Application.targetFrameRate = 60;
             ditcoinsText.text = "0";
             vethereumText.text = "0";
             PlayerManager.Instance.PlayerSpawn();
             Time.timeScale = 1;
+            TimeCalculator.Instance.BeginTimer();
             PlayerDead = false;
         }
 
@@ -92,9 +96,11 @@ namespace Gameplay.Managers
         public void GameOver()
         {
             hudMenu.SetActive(false);
-            SaveLoadManager.CurrentSaveData.highScore = LevelManager.Instance.gameLevel;
-            SaveLoadManager.CurrentSaveData.ditcoin = ditcoins;
-            SaveLoadManager.CurrentSaveData.vethereum = vethereum;
+            if (SaveLoadManager.CurrentSaveData.highScore <= LevelManager.Instance.gameLevel)
+                SaveLoadManager.CurrentSaveData.highScore = LevelManager.Instance.gameLevel;
+            SaveLoadManager.CurrentSaveData.ditcoin += ditcoins;
+            SaveLoadManager.CurrentSaveData.vethereum += vethereum;
+            SaveLoadManager.CurrentSaveData.timePlayed += TimeCalculator.Instance.elapsedTime;
             SaveLoadManager.SaveGame();
             FadeIn();
         }

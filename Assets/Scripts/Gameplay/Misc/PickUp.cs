@@ -19,7 +19,8 @@ namespace Gameplay.Misc
 
         private void Pickup()
         {
-            transform.GetComponent<BoxCollider>().enabled = false;
+            TurnOffVisibility();
+
             if (dtcOrVeth == 0)
             {
                 GameManager.IncrementDitcoins?.Invoke();
@@ -39,13 +40,13 @@ namespace Gameplay.Misc
                 }*/
             }
 
-            TurnOffVisibility();
             var pickedUpEffect = Instantiate(pickupEffect, transform.position, transform.rotation);
             Destroy(pickedUpEffect, 2f);
         }
 
         private void TurnOffVisibility()
         {
+            transform.GetComponent<BoxCollider>().enabled = false;
             transform.GetComponent<ParticleSystem>().Stop(true);
         }
 

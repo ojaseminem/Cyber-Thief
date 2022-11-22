@@ -28,7 +28,7 @@ MonoBehaviour:
   LUTIntensity: 0.079
   ColorsAmount: 32
   ChromaticAbberationEnabled: 1
-  ColorsShiftAmount: 0.0035
+  ColorsShiftAmount: 0.0016
   FishEyeEffectFactor: 0
   FishEyeEffectStart: 0
   FishEyeEffectEnd: 1
