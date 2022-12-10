@@ -113,5 +113,12 @@ namespace Gameplay.Managers
             SaveLoadManager.CurrentSaveData.volume = volumeSlider.value;
             SaveLoadManager.SaveGame();
         }
+
+        public void ResetTutorial()
+        {
+            SaveLoadManager.CurrentSaveData.tutorialCompleted = false;
+            SaveLoadManager.SaveGame();
+            Play();
+        }
     }
 }

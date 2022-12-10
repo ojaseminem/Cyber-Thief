@@ -23,6 +23,7 @@ namespace Gameplay.Managers
         [SerializeField] private GameObject hudMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject gameOverMenu;
+        [SerializeField] private GameObject tutorialMenu;
 
         #endregion
 
@@ -40,6 +41,7 @@ namespace Gameplay.Managers
         public static Action IncrementVethereum;
 
         public static bool PlayerDead;
+        public static bool TutorialCompleted;
         
         #endregion
         
@@ -67,7 +69,14 @@ namespace Gameplay.Managers
             Time.timeScale = 1;
             TimeCalculator.Instance.BeginTimer();
             PlayerDead = false;
+            SaveLoadManager.LoadGame();
+            TutorialCompleted = SaveLoadManager.CurrentSaveData.tutorialCompleted;
 
+            if (!TutorialCompleted)
+            {
+                StartTutorial();
+            }
+            
             var rand = Random.Range(0, 3);
             switch (rand)
             {
@@ -83,12 +92,27 @@ namespace Gameplay.Managers
             }
         }
 
+        private void StartTutorial()
+        {
+            Time.timeScale = 0f;
+            tutorialMenu.SetActive(true);
+        }
+
+        public void TutorialCompletedSuccessfully()
+        {
+            Time.timeScale = 1f;
+            tutorialMenu.SetActive(false);
+            TutorialCompleted = true;
+            SaveLoadManager.CurrentSaveData.tutorialCompleted = TutorialCompleted;
+            SaveLoadManager.SaveGame();
+        }
+        
         public void Replay()
         {
             AudioManager.Instance.PlaySound("Click");
             SceneManager.LoadScene("GameScene");
         }
-
+        
         public void GoToMenu()
         {
             Time.timeScale = 1;
@@ -161,20 +185,6 @@ namespace Gameplay.Managers
             fadeBlack.GetComponent<Animator>().enabled = true;
             matrixCode.Play(true);
             Invoke(nameof(ShowGameOverMenu), 2f);
-        }
-
-        #endregion
-        
-        #region Save And Load
-
-        public void SaveGame()
-        {
-            SaveLoadManager.SaveGame();
-        }
-
-        public void LoadGame()
-        {
-            SaveLoadManager.LoadGame();
         }
 
         #endregion

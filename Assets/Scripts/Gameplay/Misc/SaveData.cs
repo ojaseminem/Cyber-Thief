@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Gameplay.Misc
+﻿namespace Gameplay.Misc
 {
     [System.Serializable]
     
@@ -12,6 +10,8 @@ namespace Gameplay.Misc
         public int vethereum;
 
         public float timePlayed;
+
+        public bool tutorialCompleted;
         
         public float volume = 1;
     }

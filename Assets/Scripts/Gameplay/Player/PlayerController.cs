@@ -37,9 +37,9 @@ namespace Gameplay.Player
         private Vector3 _velocity;
         
         //Attack Variables
-        [HideInInspector] 
+        /*[HideInInspector] 
         public bool canAttackGlobal;
-        private bool _canAttackPrivate;
+        private bool _canAttackPrivate;*/
 
         //Death Variables
         private bool _isDead;
@@ -60,37 +60,36 @@ namespace Gameplay.Player
 
         private void Update()
         {
-            if(!_isDead)
+            if(GameManager.TutorialCompleted)
             {
-                skmCharacter.localPosition = new Vector3(0, 0, 0);
-                _move.x = speed;
-
-                _isGrounded = Physics.CheckSphere(groundCheck.position, radius, groundLayer);
-                if (_isGrounded && _velocity.y < 0) _velocity.y = -1f;
-
-                _hasReachedEnd = Physics.CheckSphere(endChecker.position, .2f, endLayerMask);
-                if (_hasReachedEnd && _isGrounded && _canChangeDirection) ChangeDirection();
-
-                if (_isGrounded)
+                if (!_isDead)
                 {
-                    _controller.center = new Vector3(0, .5f, 0);
+                    skmCharacter.localPosition = new Vector3(0, 0, 0);
+                    _move.x = speed;
 
-                    if (SwipeManager.SwipeUp) JumpUp();
-                    if (SwipeManager.SwipeDown) JumpDown();
-                    /*_canAttackPrivate = true;
-                    if (SwipeManager.SwipeLeft && _canAttackPrivate && canAttackGlobal) Attack(0);
-                    if (SwipeManager.SwipeRight && _canAttackPrivate && canAttackGlobal) Attack(1);*/
+                    _isGrounded = Physics.CheckSphere(groundCheck.position, radius, groundLayer);
+                    if (_isGrounded && _velocity.y < 0) _velocity.y = -1f;
+
+                    _hasReachedEnd = Physics.CheckSphere(endChecker.position, .2f, endLayerMask);
+                    if (_hasReachedEnd && _isGrounded && _canChangeDirection) ChangeDirection();
+
+                    if (_isGrounded)
+                    {
+                        _controller.center = new Vector3(0, .5f, 0);
+
+                        if (SwipeManager.SwipeUp) JumpUp();
+                        if (SwipeManager.SwipeDown) JumpDown();
+                    }
+                    else
+                    {
+                        _velocity.y += gravity * Time.deltaTime;
+                    }
+
+                    _controller.Move(_velocity * Time.deltaTime);
+
+                    if (_directionLeft) _controller.Move(_move * Time.deltaTime);
+                    if (!_directionLeft) _controller.Move(-_move * Time.deltaTime);
                 }
-                else
-                {
-                    _velocity.y += gravity * Time.deltaTime;
-                    //_canAttackPrivate = false;
-                }
-
-                _controller.Move(_velocity * Time.deltaTime);
-
-                if (_directionLeft) _controller.Move(_move * Time.deltaTime);
-                if (!_directionLeft) _controller.Move(-_move * Time.deltaTime);
             }
         }
 
@@ -131,17 +130,7 @@ namespace Gameplay.Player
         {
             anim.SetFloat(Blend, _directionLeft ? 1 : 2);
         }
-
-        /*private void Attack(int dir)
-        {
-            
-        }
-
-        private IEnumerator AttackCoroutineLeft()
-        {
-            yield return new WaitForSeconds(1f);
-        }*/
-
+        
         public void Death()
         {
             StartCoroutine(DeathAnim());
